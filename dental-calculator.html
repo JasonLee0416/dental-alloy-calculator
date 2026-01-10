@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dental Alloy Weight Calculator</title>
+    <style>
+        body { font-family: 'Segoe UI', sans-serif; background-color: #f0f2f5; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; }
+        .container { background: white; padding: 2rem; border-radius: 10px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); width: 320px; }
+        h2 { text-align: center; color: #2c3e50; margin-bottom: 1.5rem; }
+        .form-group { margin-bottom: 1rem; }
+        label { display: block; margin-bottom: 0.5rem; font-weight: bold; color: #34495e; }
+        input, select { width: 100%; padding: 0.5rem; border: 1px solid #bdc3c7; border-radius: 5px; box-sizing: border-box; }
+        button { width: 100%; padding: 0.7rem; background-color: #3498db; color: white; border: none; border-radius: 5px; font-size: 1rem; cursor: pointer; margin-top: 1rem; transition: background 0.3s; }
+        button:hover { background-color: #2980b9; }
+        #result { margin-top: 1.5rem; padding: 1rem; background-color: #ecf0f1; border-radius: 5px; text-align: center; font-weight: bold; color: #2c3e50; display: none; }
+        .note { font-size: 0.8rem; color: #7f8c8d; margin-top: 0.5rem; text-align: center; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>🦷 Alloy Calculator</h2>
+    
+    <div class="form-group">
+        <label for="waxWeight">왁스 무게 (g)</label>
+        <input type="number" id="waxWeight" placeholder="예: 0.5" step="0.01">
+    </div>
+
+    <div class="form-group">
+        <label for="material">사용 합금 (비중)</label>
+        <select id="material">
+            <option value="15.5">Gold Alloy (Type III) - 15.5</option>
+            <option value="8.3">Co-Cr (Partial) - 8.3</option>
+            <option value="8.2">Ni-Cr (Crown) - 8.2</option>
+            <option value="4.5">Titanium - 4.5</option>
+        </select>
+    </div>
+
+    <button onclick="calculate()">계산하기 (Calculate)</button>
+
+    <div id="result"></div>
+    <div class="note">* 스프루(Sprue) 및 버튼 여유분 10%가 포함된 결과입니다.</div>
+</div>
+
+<script>
+    function calculate() {
+        const wax = parseFloat(document.getElementById('waxWeight').value);
+        const specificGravity = parseFloat(document.getElementById('material').value);
+        
+        if (isNaN(wax) || wax <= 0) {
+            alert("정확한 왁스 무게를 입력해주세요.");
+            return;
+        }
+
+        // 공식: 왁스무게 * 비중 * 1.1 (여유분 10%)
+        const metalWeight = wax * specificGravity * 1.1;
+
+        const resultDiv = document.getElementById('result');
+        resultDiv.style.display = 'block';
+        resultDiv.innerHTML = `필요 합금량: <span style="color:#e74c3c; font-size:1.2rem;">${metalWeight.toFixed(2)} g</span>`;
+    }
+</script>
+
+</body>
+</html>
